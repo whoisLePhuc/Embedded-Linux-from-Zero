@@ -1,0 +1,10 @@
+CC = gcc
+CFLAGS = -Wall -Wextra -pthread
+
+all: producer_consumer
+
+producer_consumer: main.c
+	$(CC) $(CFLAGS) -o producer_consumer main.c
+
+clean:
+	rm -f producer_consumer

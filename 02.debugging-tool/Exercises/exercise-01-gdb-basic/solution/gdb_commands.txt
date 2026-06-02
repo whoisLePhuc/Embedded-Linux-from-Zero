@@ -1,0 +1,44 @@
+============================================
+GDB Commands Guide — Exercise 01: GDB Basic
+============================================
+
+1. COMPILE WITH DEBUG SYMBOLS
+-----------------------------
+gcc -g -o crash_debug crash_debug.c
+
+2. START GDB
+------------
+gdb ./crash_debug
+
+3. FIND BUG 1: BUFFER OVERFLOW (students[3])
+---------------------------------------------
+(gdb) run
+-> Program received signal SIGABRT (or SIGSEGV)
+(gdb) bt
+# Observe students[3] is out of bounds (array size is 3, valid indices 0-2)
+
+Fix: Change students[3] = c -> students[2] = c
+
+4. FIND BUG 2: NULL POINTER DEREFERENCE
+----------------------------------------
+(gdb) break print_students
+(gdb) run
+(gdb) print students[0]
+(gdb) print students[1]   -> 0x0 (NULL!)
+(gdb) print students[2]
+(gdb) step                -> step into the loop
+(gdb) print i             -> i = 1, students[1] is NULL
+(gdb) print students[1]->name   -> Cannot access memory
+
+Fix: Add NULL check in print_students()
+
+5. FIND BUG 3: OFF-BY-ONE (for loop <= 3)
+------------------------------------------
+(gdb) break main
+(gdb) run
+(gdb) list                -> find the free loop
+(gdb) break 43            -> line with for loop
+(gdb) continue
+(gdb) print i             -> shows 0, then 1, then 2, then 3 -> out of bounds!
+
+Fix: Change i <= 3 -> i < 3, and add NULL check before free

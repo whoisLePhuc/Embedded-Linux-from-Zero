@@ -1,0 +1,19 @@
+// Device Tree overlay example for my-platform-driver
+// Compile: dtc -@ -I dts -O dtb -o mydriver.dtbo mydriver.dts
+// Load:   sudo dtoverlay mydriver.dtbo
+
+/dts-v1/;
+/plugin/;
+
+/ {
+    fragment@0 {
+        target-path = "/";
+        __overlay__ {
+            my_device {
+                compatible = "vendor,my-device";
+                reg = <0x1c00000 0x1000>;
+                status = "okay";
+            };
+        };
+    };
+};

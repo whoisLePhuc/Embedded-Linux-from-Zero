@@ -1,0 +1,25 @@
+meta-embedded - Custom Embedded Linux Layer
+============================================
+
+This layer provides custom recipes and configurations for embedded
+Linux applications built with the Yocto Project.
+
+Supported Release: scarthgap
+
+Contents:
+- recipes-myapp:    Custom application recipes
+- recipes-kernel:   Out-of-tree kernel module recipes
+- recipes-core:     Custom image recipes
+
+Dependencies:
+- poky/meta (core metadata)
+- poky/meta-poky (Poky distribution)
+
+Usage:
+  1. Add to bblayers.conf:
+     BBLAYERS += "${TOPDIR}/../meta-embedded"
+
+  2. Set layer priority (default: 10):
+     BBFILE_PRIORITY_embedded = "10"
+
+Maintainer: Embedded Linux Training

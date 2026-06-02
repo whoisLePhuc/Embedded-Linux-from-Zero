@@ -1,0 +1,41 @@
+# GDB commands for debugging buggy.c (ARM cross-compiled)
+# Usage:
+#   qemu-arm-static -g 1234 ./buggy &
+#   gdb-multiarch -x gdb_commands.txt ./buggy
+
+set sysroot /usr/arm-linux-gnueabihf
+file buggy
+
+# Connect to QEMU gdbserver
+target remote :1234
+
+# Set breakpoint at main and run
+break main
+continue
+
+# Step through init_buffer
+next
+step
+
+# Print variables to spot bug 1
+print i
+print size
+
+# Set breakpoint at process_data and continue
+break process_data
+continue
+
+# Print input to spot bug 2
+print input
+backtrace
+
+# Set breakpoint at faulty_math and continue
+break faulty_math
+continue
+
+# Print ptr to spot bug 3 (null pointer)
+print ptr
+backtrace
+
+# Quit
+quit

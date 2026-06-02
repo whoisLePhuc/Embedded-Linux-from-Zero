@@ -1,0 +1,11 @@
+This is a sample text file for testing file operations.
+
+Linux File System is a structured method of storing and managing data.
+
+Inodes are the core data structure that stores metadata about files.
+File descriptors are handles that processes use to access files.
+
+This file contains multiple lines to test reading operations.
+You can use this file to practice stat(), open(), read(), and other system calls.
+
+Have fun learning Linux File System! 🚀

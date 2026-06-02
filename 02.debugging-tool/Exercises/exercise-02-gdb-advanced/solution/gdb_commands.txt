@@ -1,0 +1,53 @@
+================================================
+GDB Commands Guide — Exercise 02: GDB Advanced
+================================================
+
+1. COMPILE WITH DEBUG SYMBOLS
+-----------------------------
+gcc -g -o linked_list linked_list.c
+
+2. FIND BUG 1: UNINITIALIZED POINTER IN search_node()
+------------------------------------------------------
+Issue: Node *current is declared but not initialized to head.
+
+(gdb) break search_node
+(gdb) run
+(gdb) print current      -> garbage address (not NULL!)
+(gdb) info args           -> no arguments passed? Actually current is local
+(gdb) list                -> see line: Node *current; (missing = head)
+(gdb) disas               -> see current loaded from uninitialized stack
+
+Fix: Node *current = head;
+
+3. FIND BUG 2: CONDITIONAL BREAKPOINT ON insert_sorted CRASH
+-------------------------------------------------------------
+Issue: When head has only one node, current->next is NULL,
+       so current->next->value dereferences NULL.
+
+(gdb) break insert_sorted
+(gdb) run
+(gdb) b 30 if current == NULL   -> conditional break (adjust line)
+(gdb) continue
+(gdb) bt                        -> crash at current->next->value
+(gdb) print current             -> NULL!
+(gdb) frame 1
+(gdb) list
+
+Fix: Check head == NULL or head->value >= value before iterating.
+
+4. FIND BUG 3: WATCHPOINT ON head MODIFICATION
+-----------------------------------------------
+Watch how head changes when insert_sorted is called:
+
+(gdb) break main
+(gdb) run
+(gdb) watch head
+(gdb) continue          -> stops at each head modification
+(gdb) print head
+(gdb) print head->value
+(gdb) continue          -> step through to see when it breaks
+
+Or use memory examination:
+(gdb) x/4x head         -> see first node memory (value + next pointer)
+(gdb) x/4gx head        -> same with 8-byte granules
+(gdb) x/s head          -> won't work, it's a struct not a string

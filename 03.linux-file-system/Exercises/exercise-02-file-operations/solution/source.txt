@@ -1,0 +1,21 @@
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+This file is used to test file copy operations.
+It contains multiple lines and some special characters: !@#$%^&*()
+
+Linux File System Concepts:
+- Inode: metadata structure
+- File Descriptor: handle to open file
+- System Calls: kernel interface
+- Page Cache: RAM buffer for disk I/O
+
+You can copy this file using your file_copy program!
+
+Test different scenarios:
+1. Small files
+2. Large files  
+3. Binary files
+4. Empty files
+
+End of test file.
